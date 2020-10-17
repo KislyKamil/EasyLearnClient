@@ -1,0 +1,9 @@
+.card{
+border-style: groove;
+position: absolute;
+width: 26%;
+height: 500px;
+float: left;
+margin: 15px;
+padding: 15px;
+}
