@@ -6,7 +6,7 @@ const navitem = props => {
 
     return (
         <NavItem>
-            <NavLink to={props.link} exact className="text-light">
+            <NavLink to={props.link} exact className="text-light" onClick={props.logout}>
                 {props.text}
             </NavLink>
         </NavItem>

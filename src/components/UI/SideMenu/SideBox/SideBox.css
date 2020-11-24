@@ -1,0 +1,21 @@
+.sideBox-active{
+    width: 10%;
+    height: 4.5%;
+    z-index: 1;
+    position: relative;
+    background-color: #343a40;
+    border-top-right-radius: 40%;
+    border-bottom-right-radius: 40%;
+    border-width: 1;
+    border-left-style: none;
+    cursor: pointer;
+
+
+}
+.sideBox{
+    display: none;
+}
+
+.sideBox-active:hover{
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}

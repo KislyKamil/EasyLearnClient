@@ -1,0 +1,92 @@
+.test-intro-box{
+    width: 30%;
+    height: 80px;
+    position: relative;
+    top: 30%;
+    left: 35%;
+    background-color: rgb(224 230 255);
+    box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+.test-intro-box:active{
+    box-shadow: none;
+}
+
+.test-intro-box p {
+    padding-top: 15px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+.send {
+  position: absolute;
+  left: 49.5%;
+  top: 58%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: #cecd24;
+  text-decoration: none;
+  font-size: 15px;
+  display: inline-block;
+  width: 10%;
+  height: 5%;
+  font-family: Montserrat;
+  text-transform: uppercase;
+  padding: 0.5em 2em;
+  border: 2px solid #cecd24;
+  -webkit-transition: 0.02s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  transition: 0.02s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  background-color: #394867;
+  color:white;
+  cursor: pointer;
+}
+.send::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: #cecd24;
+  -webkit-transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+  transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+  z-index: -1;
+}
+.send::after {
+  content: "";
+  display: inline-block;
+  background-image: url("https://image.flaticon.com/icons/png/128/109/109617.png");
+  position: absolute;
+  top: 0;
+  left: calc(100% - 3em);
+  right: 3em;
+  bottom: 0;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+  transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+}
+.send:hover {
+  padding: 0.5em 3.5em 0.5em 0.5em;
+}
+.send:hover::before {
+  left: calc(100% - 3em);
+  right: 0;
+  -webkit-transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+}
+.send:hover::after {
+  right: 0;
+  -webkit-transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+  transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+}

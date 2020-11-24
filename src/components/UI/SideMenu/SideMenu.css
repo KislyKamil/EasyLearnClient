@@ -1,0 +1,80 @@
+body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #333333;
+    overflow-x: hidden;
+    transition: 0.7s;
+    padding-top: 60px;
+  }
+
+  .sidenav-active{
+      width: 250px;
+  }
+  
+  .sidenav :placeholder-shown {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav div:hover {
+    color: #f1f1f1;
+    text-decoration: none;
+  }
+
+    
+  .sidenav .test:hover {
+    color: wheat;
+  }
+
+  .test{
+    color: white;
+    margin-left: 500px;
+  }
+
+  .test-close{
+      opacity: 0;
+      
+  }
+  
+  
+  .sidenav .closebtn {
+    position: absolute;
+    cursor: pointer;
+    color: wheat;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .sidenav .test{
+    font-size:18px;
+    margin-left: 15px;
+    color: whitesmoke;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav p {font-size: 18px;}
+  }
+  
+  .sideMenu {
+      position: fixed;
+      height: 100%;
+      width: 25%;
+      top: 10%;
+  }

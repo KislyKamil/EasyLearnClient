@@ -3,39 +3,45 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavItem from './NavItem';
 import { NavLink } from 'react-router-dom';
-import * as ActionTypes from './../../store/actions'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { connect } from 'react-redux'
+import * as ActionTypes from './../../store/actions'
 
 
-const NavMenu = () => {
+import './NavMenu.css'
 
+const NavMenu = (props) => {
 
-  let item;
+  const dispatch = useDispatch()
+  let item, style;
 
+  //remember to change it after test
   if (useSelector(state => state.isAuthenticated)) {
     item = (
 
       < Nav >
         <NavItem link="/Board" text="Nauka" />
+        <NavItem link={"/User/" + props.userID } text="Konto" />
+        <NavItem link="/" text="Wyloguj" logout={() => dispatch({ type: ActionTypes.LOGOUT })} />
       </Nav >
     )
   }
+
+  props.isEnabled ? style = { marginLeft: "250px", transition: "margin-left 0.7s" } : style = { marginLeft: "0px", transition: "margin-left 0.7s" }
   return (
 
-
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={style}>
       <NavLink to='/' exact>
-        Easy-Learn
-        </NavLink>
+        <p className="homeLink">Easy-Learn</p>
+      </NavLink>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
+        {item}
         <Nav>
           <NavItem link="/Login" text="Zaloguj" />
         </Nav>
-        {item}
       </Navbar.Collapse>
     </Navbar>
 
@@ -45,9 +51,9 @@ const NavMenu = () => {
 const mapStateToProps = state => {
 
   return {
-    isAuth: state.isAuthenticated
+    isAuth: state.isAuthenticated,
+    userID: state.user.id
   }
 }
-
 
 export default connect(mapStateToProps)(NavMenu);

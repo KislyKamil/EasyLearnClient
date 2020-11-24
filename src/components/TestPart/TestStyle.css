@@ -1,0 +1,28 @@
+.test-main{
+    position: relative;
+    height: 80%;
+    width: 27%;
+    left: 35%;
+}
+
+.test-main p{
+    position: relative;
+    left: 40%;
+    margin-left: 12px;
+    font-size: 28px;
+}
+
+.ch-test-box{
+    display: grid;
+    position: relative;
+    left: 35%;
+    top: 23%;
+}
+
+.ch-test-box div{
+    margin-left: 12px;
+    font-size: 28px;
+}
+input[type=checkbox] {
+    transform: scale(1.4);
+}

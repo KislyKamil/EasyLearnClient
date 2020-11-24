@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
-html, #root{
+html {
+  height: 100%;
   background-color: ghostwhite;
 }
+.app{
+  height: 100%;
+}
+body, #root{
+  height: inherit;
+  background-color: ghostwhite;
+}
+

@@ -14,15 +14,16 @@ const loginForm = props => {
                 <Button text='Załóż konto' />
             </NavLink>
         </div>
-
-
     )
+    
     return (
         <BasicForm
             buttons={buttons}
             login={props.login}
             password={props.password}
             submit={props.submit}
+            onLoginChange={props.onLoginChange}
+            onPasswordChange={props.onPasswordChange}
         />
     )
 }

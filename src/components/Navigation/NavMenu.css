@@ -1,0 +1,17 @@
+#responsive-navbar-nav a {
+    position: relative;
+    margin: 8px;
+}
+
+
+.homeLink{
+    text-decoration: none;
+    margin-bottom: 3px;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+}
+.navbar{
+    height: 60px;
+    display: grid;
+}
