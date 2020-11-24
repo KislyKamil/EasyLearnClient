@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UserSettings from './../../components/UserSettings/UserSettings'
+import Stats from './../../components/Stats/Stats'
 import './UserPanel.css'
-
-
 
 class UserPanel extends Component {
 
@@ -11,11 +10,13 @@ class UserPanel extends Component {
         login: "",
         password: "",
         passwordAgain: "",
-        email: ""
+        email: "",
+        view: "details"
     }
 
     componentDidMount = () => {
         document.getElementsByClassName("sideMenu")[0].style.display = "none"
+
     }
 
     onChangeHandler = (event) => {
@@ -26,20 +27,49 @@ class UserPanel extends Component {
             [event.target.id]: event.target.value
 
         })
-
     }
 
-    onFocusHandler = (event) => {
+    onSubmitHandler = () => {
+
+        if (this.state.password !== this.state.passwordAgain) {
+
+            alert("Hasla musza byc takie same")
+            return
+        }
+
+        alert("test")
+    }
+
+    onClickHandler = (type) => {
 
         this.setState({
-
             ...this.state,
-            [event.target.id]: ""
-
+            view: type
         })
+    }
+
+    currentView = () => {
+        if (this.state.view === "stats") {
+            this.userPanelPart = (
+                <Stats />
+            )
+        }
+        if (this.state.view === "details") {
+            this.userPanelPart = (
+                <UserSettings
+                    login={this.state.login}
+                    password={this.state.password}
+                    passwordAgain={this.state.passwordAgain}
+                    email={this.email}
+                    change={this.onChangeHandler}
+                    submit={this.onSubmitHandler}
+                />
+            )
+        }
     }
     render() {
 
+        this.currentView()
 
         return (
             <div className="container-user">
@@ -58,18 +88,11 @@ class UserPanel extends Component {
                             </div>
 
                     </div>
-                    <button className="draw-border" >Statystyki</button>
-                    <button className="draw-border" >Szczególy</button>
+                    <button className="draw-border" onClick={() => this.onClickHandler("stats")}>Statystyki</button>
+                    <button className="draw-border" onClick={() => this.onClickHandler("details")}>Szczególy</button>
                 </div>
 
-                <UserSettings
-                    login={this.state.login}
-                    password={this.state.password}
-                    passwordAgain={this.state.passwordAgain}
-                    email={this.email}
-                    change={this.onChangeHandler}
-                    focus={this.onFocusHandler}
-                />
+                {this.userPanelPart}
 
             </div>
         )

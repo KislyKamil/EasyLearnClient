@@ -127,8 +127,8 @@
   box-sizing: border-box;
   border-style: groove;
   border-width: 1px;
-  border-color: hotpink;
-  box-shadow: 3px 2px 5px rgba(235, 25, 110, 1);
+  border-color:  #58cdd1;
+  box-shadow: 2px 2px 2px   #58cdd1;
   
 
 }

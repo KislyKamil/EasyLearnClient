@@ -15,7 +15,8 @@
 .ch-test-box{
     display: grid;
     position: relative;
-    left: 35%;
+    left: 45%;
+    width: 30%;
     top: 23%;
 }
 

@@ -44,7 +44,7 @@ class Board extends Component {
         this.props.examOff();
 
         if (this.props.isEnabled && !this.props.isExamOn) {
-            document.getElementsByClassName("sideMenu")[0].style.display = "auto"
+            document.getElementsByClassName("sideMenu")[0].style.display = "block"
             return (
                 <div className="temp">
                     <p>Wybierz test z menu po lewej stronie</p>

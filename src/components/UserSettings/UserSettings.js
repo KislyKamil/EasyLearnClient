@@ -1,4 +1,5 @@
 import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 
 const UserSettings = (props) => {
@@ -27,14 +28,10 @@ const UserSettings = (props) => {
                     <input id="email" type="email" value={props.email} onChange={props.change} onFocus={props.focus} placeholder="nowy adres email" />
                 </div>
 
-                <button class="zt-btn"> Zatwierdz zmiany </button>
+                <button className="zt-btn" onClick={props.submit}> Zatwierdz zmiany </button>
 
             </div>
-
-
-
-
-
+            {props.password !== props.passwordAgain? <Alert variant="danger">Hasla nie sa jednakowe</Alert>: <div></div> }
         </div>
 
     )
