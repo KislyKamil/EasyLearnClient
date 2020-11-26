@@ -17,16 +17,16 @@ const basicForm = (props) => {
                                     </div>
                                     <input type="text" className="form-control" placeholder="Nazwa użytkownika"
                                         aria-label="Username" aria-describedby="addon-wrapping"
-                                        onChange={props.onLoginChange} 
-                                        />
+                                        onChange={props.login}
+                                    />
                                 </div>
-                                <div className="input-group mb-2" onChange={props.onPasswordChange} >
+                                <div className="input-group mb-2">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text" id="addon-wrapping">Hasło</span>
                                     </div>
                                     <input type="password" className="form-control"
                                         placeholder="password" aria-label="Username" aria-describedby="addon-wrapping"
-                                        onChange={props.onPasswordChange}
+                                        onChange={props.password}
                                     />
                                 </div>
                                 {props.extras}

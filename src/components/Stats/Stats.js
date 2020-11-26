@@ -2,7 +2,7 @@ import React from 'react'
 import Chart from "react-google-charts";
 
 
-const Stats = () => {
+const Stats = (props) => {
 
     return (
         <div className="details">
@@ -13,10 +13,10 @@ const Stats = () => {
                 chartType="PieChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                    ['Task', 'Hours per Day'],
-                    ['Speech', 7],
-                    ['Test', 3],
-                    ['Text', 0],
+                    ['Forma', 'ilosc'],
+                    ['Wymowa', props.stats.speech / 6],
+                    ['Slownictwo', props.stats.test],
+                    ['Tekst', 0]
                 ]}
                 options={{
                     title: 'Statystyki z wykonywania testow',

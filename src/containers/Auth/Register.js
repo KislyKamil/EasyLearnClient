@@ -35,7 +35,6 @@ class Register extends Component {
         });
 
     };
-    // const registerData = new FormData();
 
     handleSubmit = (event) => {
 
@@ -59,11 +58,10 @@ class Register extends Component {
                 email: this.state.email,
             })
 
-
+           
         }).then((response) => {
 
             console.log(response.status);
-
             this.setState({
                 isLoading: false
             })

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UserSettings from './../../components/UserSettings/UserSettings'
 import Stats from './../../components/Stats/Stats'
+import * as ActionTypes from './../../store/actions'
+
 import './UserPanel.css'
 
 class UserPanel extends Component {
@@ -11,12 +13,18 @@ class UserPanel extends Component {
         password: "",
         passwordAgain: "",
         email: "",
-        view: "details"
+        view: "details",
+
+        results: {
+            test: 0,
+            speech: 0
+        }
     }
 
     componentDidMount = () => {
         document.getElementsByClassName("sideMenu")[0].style.display = "none"
 
+        this.getInitStats()
     }
 
     onChangeHandler = (event) => {
@@ -37,7 +45,57 @@ class UserPanel extends Component {
             return
         }
 
-        alert("test")
+        this.submitChange();
+
+    }
+
+    getInitStats = () => {
+        fetch('http://localhost:8080/api/Details/' + this.props.userId, {
+
+            method: "GET",
+            headers: {
+                'Authorization': "Bearer " + this.props.token,
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => {
+
+            return response.json();
+
+        }).then((data) => {
+
+            let tmp = { test: data.testAll, speech: data.speechAll }
+
+            this.setState({
+                ...this.state,
+                results: tmp
+            })
+        })
+    }
+
+    submitChange = () => {
+        fetch('http://localhost:8080/api/EditUser', {
+
+            method: "POST",
+            headers: {
+                'Authorization': "Bearer " + this.props.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+
+                id: this.props.userId,
+                username: this.state.login,
+                password: this.state.password,
+                email: this.state.email
+            })
+        }).then((response) => {
+
+            return response.json();
+
+        }).then((data) => {
+
+            console.log(data)
+            this.props.storeUser({ username: data.username, token: data.token, userId: this.props.userId, testAmount: this.props.testAmount })
+        })
     }
 
     onClickHandler = (type) => {
@@ -51,7 +109,7 @@ class UserPanel extends Component {
     currentView = () => {
         if (this.state.view === "stats") {
             this.userPanelPart = (
-                <Stats />
+                <Stats stats={this.state.results} />
             )
         }
         if (this.state.view === "details") {
@@ -102,12 +160,16 @@ class UserPanel extends Component {
 const mapStateToProps = state => {
     return {
         username: state.user.username,
+        userId: state.user.id,
+        token: state.user.token,
+        testAmount: state.user.testCount
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        storeUser: (data) => dispatch({ type: ActionTypes.STORE_USER, id: data.userId, username: data.username, token: data.token, testCount: data.testAmount }),
     }
 }
 
-export default connect(mapStateToProps)(UserPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(UserPanel)
