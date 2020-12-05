@@ -78,3 +78,21 @@ body {
       width: 25%;
       top: 10%;
   }
+
+  .navi-btn{
+    /* border-style: groove; */
+    width: 95%;
+    margin-left: 5px;
+    margin-top: 5px;
+    height: 6%;
+
+  }
+
+  .fa-arrow-down, .fa-arrow-up {
+    font-size: 36px;
+    position: relative;
+    left: 40%;
+    top: 12%;
+    cursor: pointer;
+    color: rgb(175, 64, 64)
+  }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import './SideMenu.css'
 import SideBox from './SideBox/SideBox'
 
@@ -6,9 +6,41 @@ import { NavLink } from 'react-router-dom';
 
 
 
-const sideMenu = (props) => {
+const SideMenu = (props) => {
 
-    let style, ExamList, sideBox
+    let style, examList, sideBox, currentExams
+
+    const [id, setValue] = useState(props.testAmount);
+
+    function update(newId) {
+        setValue(id => newId);
+    }
+
+
+    const init = () => {
+
+        if (examList.length <= 14) {
+
+            currentExams = examList
+
+        } else {
+            currentExams = examList.slice(id - 14, id)
+        }
+    }
+    const pushExams = (styleName) => {
+
+        for (let i = 0; i < props.testAmount; i++) {
+
+            examList.push(
+                <div key={Date.now() + Math.random() * 2}>
+                    <NavLink key={Date.now() + Math.random() * 2} to={"/Exam/" + i} className={styleName} onClick={props.turnExamOn}>
+                        <p className={styleName}>{"Słownictwo-" + (i + 1)}</p>
+                    </NavLink>
+                </div >
+            )
+        }
+    }
+
 
 
     sideBox = (
@@ -17,21 +49,12 @@ const sideMenu = (props) => {
 
     if (props.isEnabled) {
         style = "sidenav sidenav-active"
-        ExamList = [];
+        examList = [];
 
         document.getElementsByClassName("closebtn")[0].style.display = "inherit"
 
 
-        for (let i = 0; i < props.testAmount; i++) {
-
-            ExamList.push(
-                <div key={Date.now() + Math.random()}>
-                    <NavLink key={Date.now() + Math.random() + 1} to={"/Exam/" + i} className="test" onClick={props.turnExamOn}>
-                        <p className="test">{"Słownictwo-" + (i + 1)}</p>
-                    </NavLink>
-                </div >
-            )
-        }
+        pushExams("test")
 
     } else if (!props.isEnabled && props.isExamOn) {
 
@@ -41,38 +64,68 @@ const sideMenu = (props) => {
             <SideBox name="sideBox-active" openMenu={props.openMenuHandler} />
         )
 
-        ExamList = [];
+        examList = [];
 
     } else {
         style = "sidenav"
 
-        ExamList = [];
-
-        for (let i = 0; i < props.testAmount; i++) {
-
-            ExamList.push(
-                <div key={Date.now() + Math.random() * 2}>
-                    <NavLink key={Date.now() + Math.random() * 2} to={"/Exam/" + i} className="test test-close" onClick={props.turnExamOn}>
-                        <p className="test test-close">{"Słownictwo-" + (i + 1)}</p>
-                    </NavLink>
-                </div >
-            )
-        }
+        examList = [];
+        pushExams("test test-close")
 
     }
 
+    const lazyLoadingHandler = (type) => {
 
+        let tmp = id - 14;
+
+        if (examList.length > 14) {
+
+            switch (type) {
+
+                case "up":
+                    if (id <= 14) {
+                        break;
+                    }
+                    if (id - 14 < 14) {
+                        update(id - tmp)
+                        break;
+                    }
+
+                    update(id - 14)
+                    break;
+
+                case "down":
+                    if (id == examList.length) {
+                        break;
+                    }
+                    if (id + 14 > examList.length - 1) {
+                        update(examList.length)
+                        break;
+                    }
+                    update(id + 14)
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
+    }
+
+    init()
 
     return (
         <div className="sideMenu">
             {sideBox}
             <div id="mySidenav" className={style}>
                 <div className="closebtn" onClick={props.disableSideView}>&times;</div>
-                {ExamList}
+                <div className="navi-btn"><i className='fas fa-arrow-up' onClick={() => lazyLoadingHandler("up")}></i></div>
+                {currentExams}
+                <div className="navi-btn"><i className='fas fa-arrow-down' onClick={() => lazyLoadingHandler("down")}></i></div>
             </div>
         </div>
 
     )
 }
 
-export default sideMenu
+export default SideMenu

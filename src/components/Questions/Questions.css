@@ -133,7 +133,7 @@
 
 
   @import url("https://fonts.googleapis.com/css?family=Montserrat");
-.send {
+.send-results {
   position: absolute;
   left: 53%;
   top: 48%;
@@ -155,7 +155,7 @@
   color:white;
   cursor: pointer;
 }
-.send::before {
+.send-results::before {
   content: "";
   display: inline-block;
   position: absolute;
@@ -168,7 +168,7 @@
   transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
   z-index: -1;
 }
-.send::after {
+.send-results::after {
   content: "";
   display: inline-block;
   background-image: url("https://image.flaticon.com/icons/png/128/109/109617.png");
@@ -183,16 +183,16 @@
   -webkit-transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
   transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
 }
-.send:hover {
+.send-results:hover {
   padding: 0.5em 3.5em 0.5em 0.5em;
 }
-.send:hover::before {
+.send-results:hover::before {
   left: calc(100% - 3em);
   right: 0;
   -webkit-transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
   transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
 }
-.send:hover::after {
+.send-results:hover::after {
   right: 0;
   -webkit-transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
   transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);

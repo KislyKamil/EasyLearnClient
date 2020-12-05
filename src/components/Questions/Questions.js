@@ -50,7 +50,7 @@ const questions = (props) => {
             <div className="test-navigation" translate="no">
                 <div className="counter">{props.id + 1}/12</div>
                 <p className="arrow left" onClick={props.prev}></p>
-                {props.id + 1 === 12 ? <p className="send" onClick={props.submit}>Zakończ</p> : <p className="arrow right" onClick={props.next}></p>}
+                {props.id + 1 === 12 ? <p className="send-results" onClick={props.submit}>Zakończ</p> : <p className="arrow right" onClick={props.next}></p>}
             </div>
         </div >
     )
