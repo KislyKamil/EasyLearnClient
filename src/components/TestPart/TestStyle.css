@@ -8,6 +8,7 @@
 
 .qs-main div{
     width: 100%;
+    border-style: groove;
 }
 
 .test-main p{
@@ -45,7 +46,7 @@ input[type=checkbox] {
 
 .word-box p{
     margin: 5px;
-    font-weight: 600;
+    
 }
 
 .word-box-nd p{
@@ -59,4 +60,8 @@ input[type=checkbox] {
     text-align: center;
     border-style: groove;
     font-size: 36px;
+}
+
+.wd{
+    font-weight: 600;
 }

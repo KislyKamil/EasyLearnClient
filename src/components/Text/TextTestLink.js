@@ -1,13 +1,23 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import './TextMenu.css'
 
 
 const TextTestLink = (props) => {
+
+    let history = useHistory()
+
+    useEffect(() => {
+        document.getElementsByClassName("sideMenu")[0].style.display = "none"
+    })
+
+    const redirectHandler = () => {
+        history.push("/TextTest/" + props.id)
+    }
+
     return (
-        <div>
-            <NavLink to={"/TextTest/" + props.id}>
-                <p>{"TEST"}</p>
-            </NavLink>
+        <div className="text-link" onClick={redirectHandler}>
+            <p> Tekst {props.id} </p>
         </div >
     )
 }

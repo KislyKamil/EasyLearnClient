@@ -1,0 +1,18 @@
+.text-link{
+    width: 8%;
+    height: 8%;
+    border-style: groove;
+    position: relative;
+    margin: 15px;
+}
+
+
+.text-link p, .text-link a{
+    position: relative;
+    top: 15%;
+    color: black;
+    text-decoration: none;
+    font-size: 23px;
+    text-align: center;
+}
+

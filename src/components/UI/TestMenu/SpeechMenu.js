@@ -203,8 +203,8 @@ class SpeechMenu extends Component {
                     key={i}
                     word={questions[i].word}
                     phonetics={questions[i].phonetics}
-                    definition={questions[0].definition}
-                    example={questions[0].example}
+                    definition={questions[i].definition}
+                    example={questions[i].example}
                     nextQuestion={this.nextQuestionHandler}
                 />
             )

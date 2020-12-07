@@ -5,7 +5,11 @@ import TextTestLink from './TextTestLink'
 
 const TextMenu = () => {
     return (
-        <TextTestLink id={1} />
+        <div>
+            <TextTestLink id={1} />
+            <TextTestLink id={2} />
+        </div>
+
     )
 }
 
