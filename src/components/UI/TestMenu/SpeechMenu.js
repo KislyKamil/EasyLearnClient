@@ -12,6 +12,7 @@ const randomWords = require('random-words');
 
 let testBody = []
 let btn = <Spinner />
+
 class SpeechMenu extends Component {
 
     state = {
@@ -19,52 +20,66 @@ class SpeechMenu extends Component {
         questions: [
             {
                 word: '',
-                pronun: ''
+                phonetics: {
+                    text: '',
+                    audio: ''
+                },
+                definition: ''
             },
             {
                 word: '',
-                pronun: ''
+                phonetics: {
+                    text: '',
+                    audio: ''
+                },
+                definition: ''
             },
             {
                 word: '',
-                pronun: ''
+                phonetics: {
+                    text: '',
+                    audio: ''
+                },
+                definition: ''
             },
             {
                 word: '',
-                pronun: ''
+                phonetics: {
+                    text: '',
+                    audio: ''
+                },
+                definition: ''
             },
             {
                 word: '',
-                pronun: ''
+                phonetics: {
+                    text: '',
+                    audio: ''
+                },
+                definition: ''
             },
             {
                 word: '',
-                pronun: ''
-            },
-            {
-                word: '',
-                pronun: ''
+                phonetics: {
+                    text: '',
+                    audio: ''
+                },
+                definition: ''
             }
         ],
         currentPage: 0,
         points: 0
     }
 
+    words;
 
     componentDidMount = () => {
 
+        this.words = randomWords(6)
 
-        let tmpQuestions
-        database.ref('SpeechTests/questions').once('value').then((snapshot) => {
-            tmpQuestions = snapshot.val()
-        }).then(() => {
-            this.setState({
-                ...this.state,
-                questions: tmpQuestions
-            })
-
-            this.generateTest(tmpQuestions);
-        })
+        this.words.forEach(element => {
+            this.fetchWords(element)
+        });
 
         btn = <div className="test-intro-box" onClick={this.startTest}><p>Generate test</p></div>
 
@@ -85,7 +100,7 @@ class SpeechMenu extends Component {
 
         tmp.currentPage++
         tmp.points++
-        
+
         document.getElementById("ts").innerText = " "
 
         this.setState({
@@ -122,8 +137,21 @@ class SpeechMenu extends Component {
                 isTestOn: false,
                 currentPage: 0
             })
+        })
 
+    }
 
+    fetchWords = (word) => {
+        fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + word, {
+
+            method: "GET"
+        }).then((response) => {
+
+            return response.json()
+
+        }).then((response) => {
+
+            console.log(response)
         })
 
     }
@@ -147,23 +175,10 @@ class SpeechMenu extends Component {
 
                 continue
             }
-
-            testBody.push(
-                <TestBox key={i} randoms={this.getRands()} nextQuestion={this.nextQuestionHandler} />
-            )
-
         }
     }
 
-    getRands = () => {
 
-        let rands = [
-            randomWords(),
-            randomWords()
-        ]
-
-        return rands
-    }
 
 
     render() {

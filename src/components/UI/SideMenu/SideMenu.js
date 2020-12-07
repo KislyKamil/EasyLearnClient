@@ -18,7 +18,7 @@ const SideMenu = (props) => {
 
 
     const init = () => {
-
+        console.log(examList.length)
         if (examList.length <= 14) {
 
             currentExams = examList
@@ -52,6 +52,8 @@ const SideMenu = (props) => {
         examList = [];
 
         document.getElementsByClassName("closebtn")[0].style.display = "inherit"
+        document.getElementsByClassName("navi-btn")[0].style.display = "block"
+        document.getElementsByClassName("navi-btn")[1].style.display = "block"
 
 
         pushExams("test")
@@ -59,6 +61,9 @@ const SideMenu = (props) => {
     } else if (!props.isEnabled && props.isExamOn) {
 
         document.getElementsByClassName("closebtn")[0].style.display = "none"
+
+        document.getElementsByClassName("navi-btn")[0].style.display = "none"
+        document.getElementsByClassName("navi-btn")[1].style.display = "none"
 
         sideBox = (
             <SideBox name="sideBox-active" openMenu={props.openMenuHandler} />
@@ -121,7 +126,7 @@ const SideMenu = (props) => {
                 <div className="closebtn" onClick={props.disableSideView}>&times;</div>
                 <div className="navi-btn"><i className='fas fa-arrow-up' onClick={() => lazyLoadingHandler("up")}></i></div>
                 {currentExams}
-                <div className="navi-btn"><i className='fas fa-arrow-down' onClick={() => lazyLoadingHandler("down")}></i></div>
+                <div className="navi-btn dw"><i className='fas fa-arrow-down' onClick={() => lazyLoadingHandler("down")}></i></div>
             </div>
         </div>
 

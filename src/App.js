@@ -8,9 +8,11 @@ import Exam from './containers/Exam/Exam'
 import UserPanel from './containers/User/UserPanel'
 import SpeechTest from './containers/SpeechTest/SpeechTest'
 import TextTest from './containers/TextTest/TextTest'
+import TextMenu from '././components/Text/TextMenu'
 
 import { connect } from 'react-redux'
 import * as ActionTypes from './store/actions'
+
 
 
 class App extends Component {
@@ -31,7 +33,8 @@ class App extends Component {
         <Route path='/Exam/:id' exact component={Exam} />
         <Route path='/User/:id' exact component={UserPanel} />
         <Route path='/SpeechTest' exact component={SpeechTest} />
-        <Route path='/TextTest' exact component={TextTest} />
+        <Route path='/TextTest' exact component={TextMenu} />
+        <Route path='/TextTest/:id' exact component={TextTest} />
         <Redirect to="/" />
       </Switch>
     )
