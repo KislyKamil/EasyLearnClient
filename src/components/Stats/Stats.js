@@ -14,7 +14,7 @@ const Stats = (props) => {
                 loader={<div>Loading Chart</div>}
                 data={[
                     ['Forma', 'ilosc'],
-                    ['Wymowa', props.stats.speech / 6],
+                    ['Wymowa', props.stats.speech / 5],
                     ['Slownictwo', props.stats.test],
                     ['Tekst', 0]
                 ]}

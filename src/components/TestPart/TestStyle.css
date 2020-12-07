@@ -1,15 +1,18 @@
 .test-main{
     position: relative;
     height: 80%;
-    width: 27%;
-    left: 35%;
+    width: 60%;
+    top: 13%;
+    left: 30%;
+}
+
+.qs-main div{
+    width: 100%;
 }
 
 .test-main p{
     position: relative;
-    left: 40%;
     margin-left: 12px;
-    font-size: 28px;
 }
 
 .ch-test-box{
@@ -26,4 +29,34 @@
 }
 input[type=checkbox] {
     transform: scale(1.4);
+}
+
+.word-box{
+    font-size: 26px;
+    background-color: aliceblue;
+    /* border-style: groove;
+    border-width: 1px;
+    border-color: rgb(32, 3, 85); */
+}
+.word-box-nd{
+    font-size: 26px;
+    background-color: aliceblue;
+}
+
+.word-box p{
+    margin: 5px;
+    font-weight: 600;
+}
+
+.word-box-nd p{
+    margin: 5px;
+    font-size: 22px;
+}
+
+
+#goNext {
+    width: 100%;
+    text-align: center;
+    border-style: groove;
+    font-size: 36px;
 }

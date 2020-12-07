@@ -18,7 +18,6 @@ const SideMenu = (props) => {
 
 
     const init = () => {
-        console.log(examList.length)
         if (examList.length <= 14) {
 
             currentExams = examList

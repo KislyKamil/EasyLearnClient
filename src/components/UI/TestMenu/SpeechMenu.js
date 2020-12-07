@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import './SpeechMenu.css'
 import TestPart from '../../TestPart/TestPart'
 import Spinner from './../Spinner/SpinnerNd'
-import TestBox from './../../TestPart/TestBox'
 import { connect } from 'react-redux'
 
-import database from './../../../config'
 
 const randomWords = require('random-words');
 
@@ -24,7 +22,8 @@ class SpeechMenu extends Component {
                     text: '',
                     audio: ''
                 },
-                definition: ''
+                definition: '',
+                example: ''
             },
             {
                 word: '',
@@ -32,7 +31,8 @@ class SpeechMenu extends Component {
                     text: '',
                     audio: ''
                 },
-                definition: ''
+                definition: '',
+                example: ''
             },
             {
                 word: '',
@@ -40,7 +40,8 @@ class SpeechMenu extends Component {
                     text: '',
                     audio: ''
                 },
-                definition: ''
+                definition: '',
+                example: ''
             },
             {
                 word: '',
@@ -48,7 +49,8 @@ class SpeechMenu extends Component {
                     text: '',
                     audio: ''
                 },
-                definition: ''
+                definition: '',
+                example: ''
             },
             {
                 word: '',
@@ -56,7 +58,8 @@ class SpeechMenu extends Component {
                     text: '',
                     audio: ''
                 },
-                definition: ''
+                definition: '',
+                example: ''
             },
             {
                 word: '',
@@ -64,7 +67,8 @@ class SpeechMenu extends Component {
                     text: '',
                     audio: ''
                 },
-                definition: ''
+                definition: '',
+                example: ''
             }
         ],
         currentPage: 0,
@@ -72,6 +76,7 @@ class SpeechMenu extends Component {
     }
 
     words;
+    tmpArr = []
 
     componentDidMount = () => {
 
@@ -80,6 +85,13 @@ class SpeechMenu extends Component {
         this.words.forEach(element => {
             this.fetchWords(element)
         });
+
+
+        this.setState(({
+            ...this.state,
+            questions: this.tmpArr
+        }))
+
 
         btn = <div className="test-intro-box" onClick={this.startTest}><p>Generate test</p></div>
 
@@ -93,6 +105,8 @@ class SpeechMenu extends Component {
             ...this.state,
             isTestOn: true
         })
+
+        this.generateTest(this.state.questions)
     }
 
     nextQuestionHandler = () => {
@@ -144,46 +158,79 @@ class SpeechMenu extends Component {
     fetchWords = (word) => {
         fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + word, {
 
-            method: "GET"
+            method: "GET",
+            // mode: "no-cors",
         }).then((response) => {
 
             return response.json()
 
         }).then((response) => {
 
-            console.log(response)
+
+            if (response[0].phonetics[0] == null || response[0].meanings[0] == null) {
+
+                console.log("Re-finding")
+                return this.fetchWords(randomWords())
+
+            }
+            this.tmpArr.push(this.fillState(response[0]))
+
+        }).then(() => {
+
+            console.log("OK")
+        }).catch((error) => {
+
+            console.error('Error:' + error)
         })
 
     }
 
     generateTest = (questions) => {
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < questions.length; i++) {
 
+            if (i === 5) {
 
-            if (i === 6) {
                 testBody.push(
                     <p className="send" onClick={this.submitResults}>Zakończ</p>
                 )
                 continue
             }
 
-            if (Math.round(Math.random()) === 0) {
-                testBody.push(
-                    <TestPart key={i} words={questions[Math.round(Math.random() * 6)]} nextQuestion={this.nextQuestionHandler} />
-                )
 
-                continue
-            }
+            testBody.push(
+                <TestPart
+                    key={i}
+                    word={questions[i].word}
+                    phonetics={questions[i].phonetics}
+                    definition={questions[0].definition}
+                    example={questions[0].example}
+                    nextQuestion={this.nextQuestionHandler}
+                />
+            )
+
         }
     }
 
 
+    fillState = (rawData) => {
 
+        let tmpDef = rawData.meanings[0].definitions[0].definition
+
+        return {
+            word: rawData.word,
+            phonetics: {
+                text: rawData.phonetics[0].text,
+                audio: rawData.phonetics[0].audio
+            },
+            definition: tmpDef,
+            example: rawData.meanings[0].definitions[0].example
+        }
+
+    }
 
     render() {
 
-        console.log(testBody)
         let body = this.state.isTestOn ? testBody[this.state.currentPage] : btn
 
         return (

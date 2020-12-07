@@ -27,17 +27,17 @@
 
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 .send {
-  position: absolute;
-  left: 49.5%;
-  top: 58%;
+  position: relative;
+  left: 50%;
+  top: 35%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   color: #cecd24;
   text-decoration: none;
   font-size: 15px;
   display: inline-block;
-  width: 10%;
-  height: 5%;
+  width: 20%;
+  height: 7%;
   font-family: Montserrat;
   text-transform: uppercase;
   padding: 0.5em 2em;

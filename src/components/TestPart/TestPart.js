@@ -1,52 +1,74 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './TestStyle.css'
-import { useStore, connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 const TestPart = (props) => {
 
+    let body
+    const [isCorrect, setValue] = useState(false);
+
+
     let part = (
-        <div style={{backgroundColor: "wheat"}}>
-            <p>{props.words.pronun}</p>
+        <div>
+            <div className="word-box">Słowo:
+            <p>{props.word.toLowerCase()}</p>
+            </div>
+
+            <div className="word-box">{"Fonetyka słowa:"}
+                <p>{props.phonetics.text}</p>
+                <p>{props.phonetics.audio}</p>
+            </div>
+
+            <div className="word-box-nd">{"Defnicja z jezyka angielskiego:"}<p>{props.definition}</p></div>
+            <div className="word-box-nd">{"Przykładowe użycie:"}<p>{props.example}</p></div>
         </div>
     )
-    const box = useRef(null);
 
-    const waitTillNext = () => {
-        return setTimeout(() => {
+    const updateView = () => {
 
-            document.getElementById('goNext').style.display = "block"
-        }, 1600)
+        setValue(true);
+    }
+    let tran = document.getElementById("ts")
+
+    if (tran != null) {
+        console.log(tran.innerHTML)
+        if (tran.innerHTML === props.word.toLowerCase()) {
+
+            updateView()
+            tran.innerHTML = ''
+
+        }
     }
 
-    useEffect(() => {
-        box.current = document.getElementsByClassName("qs-main")[0]
-
-    });
-
-    if (props.word === props.words.word.toLowerCase()) {
-
-
-        box.current.style.backgroundColor = "#73e873"
-
-        waitTillNext()
-
+    if (isCorrect) {
+        body = (
+            <div className="test-main" >
+                <div className="qs-main">{part}</div>
+                <div id='goNext'>
+                    <p>{"Przejdź do kolejenego pytania"}</p>
+                    <i style={{ fontSize: "85px", color: "green" }} className='fas fa-arrow-alt-circle-right' onClick={props.nextQuestion}></i>
+                </div >
+            </div >
+        )
+    } else {
+        body = (
+            <div className="test-main" >
+                <div className="qs-main">{part}</div>
+            </div >
+        )
     }
 
     return (
-        <div className="test-main">
-            <div className="qs-main"><p>{props.words.word.toLowerCase()}</p>{part}</div> 
-            <div id='goNext' style={{ display: "none", backgroundColor: "white" }}>
-                <i style={{ fontSize: "55px" }} className='fas fa-arrow-alt-circle-right' onClick={props.nextQuestion}></i>
-            </div >
-        </div >
+      body
     )
 
 }
 
+
 const mapStateToProps = state => {
 
     return {
-        word: state.word,
+        transcript: state.word,
     }
 }
 
