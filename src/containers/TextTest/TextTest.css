@@ -1,3 +1,46 @@
 .main-text{
-    width: 50%;
+    width: 70%;
+    position: relative;
+    margin-top: 25px;
+    font-size: 21px;
+    font-weight: 500;
+    left: 16%;
+}
+
+.writing-box{
+    height: 29px;
+    cursor: text;
+    background-color:pink;
+    color: black;
+}
+
+.input-text{
+    width: 1px;
+    height: 1px;
+    background-color: ghostwhite;
+    /* background-color: grey; */
+    border-style: none;
+}
+
+.input-text:focus {
+    outline-style: none;
+    outline-color: ghostwhite;
+}
+
+.translate-box{
+    position: absolute;
+    width: 13%;
+    height: 13%;
+    background-color: rgb(134, 68, 134);
+    border-radius: 9%;
+    display: none
+}
+
+.translate-box p {
+    color: white;
+    text-align: center;
+    top: 15%;
+}
+tbody span{
+    cursor: pointer;
 }
