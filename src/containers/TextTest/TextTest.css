@@ -29,18 +29,37 @@
 
 .translate-box{
     position: absolute;
-    width: 13%;
-    height: 13%;
-    background-color: rgb(134, 68, 134);
+    width: 11%;
+    height: 10%;
+    opacity: 0.9;
+    background-color: rgb(141, 134, 141);
     border-radius: 9%;
     display: none
 }
 
 .translate-box p {
-    color: white;
+    color: black;
     text-align: center;
     top: 15%;
 }
 tbody span{
     cursor: pointer;
 }
+
+
+.answer-text{
+    position: relative;
+    left: 20%;
+    height: 250px;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 440px 640px;
+}
+
+.answer-text p{
+    font-size: 35px;
+}
+.rating, .rate-box{
+    background-color: aliceblue;
+}
+

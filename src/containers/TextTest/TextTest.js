@@ -5,6 +5,12 @@ import './TextTest.css'
 
 const translate = setCORS("http://cors-anywhere.herokuapp.com/");
 
+
+let time = 0
+let timeInterval = 6000;
+let timeoutHandler = null
+let intervalUpdate = true
+
 class TextTest extends Component {
 
     state = {
@@ -25,7 +31,8 @@ class TextTest extends Component {
         top: '',
         left: '',
         helpCounter: 0,
-        translation: ''
+        translation: '',
+        reRender: false
     }
 
 
@@ -103,8 +110,15 @@ class TextTest extends Component {
 
     inputHandler = (event) => {
 
+        if (this.state.needBuild) {
+            setInterval(() => {
+                time += 0.1
+            }, 100)
+        }
+
         this.setState({
             ...this.state,
+            needBuild: false,
             inputValue: event.target.value
         })
     }
@@ -120,18 +134,6 @@ class TextTest extends Component {
             divText: tmp,
             inputValue: ''
         })
-
-        // this.contentBody = this.convertStringToArr(this.state.divText[this.divId])
-
-        // this.content = []
-
-        // this.contentBody.forEach((element, id) => {
-        //     this.content.push(
-        //         <span key={Date.now() + id}>{element}{" "}</span>
-        //     )
-        // })
-
-        // this.divBody[this.state.divText[this.divId]].push(this.content)
     }
 
     componentDidMount = () => {
@@ -142,15 +144,14 @@ class TextTest extends Component {
     translateSpanHandler = (event) => {
         let tmp = { ...this.state }
         tmp.helpCounter++
-        let word
-        
+
 
         translate(event.target.innerHTML, { from: "en", to: "pl" })
             .then(res => {
 
                 return res.text
-                
-            }).then(data =>{
+
+            }).then(data => {
                 document.getElementsByClassName("translate-box")[0].style.display = "block"
                 document.getElementById("answ").innerHTML = data
             })
@@ -171,24 +172,50 @@ class TextTest extends Component {
         document.getElementsByClassName("translate-box")[0].style.display = "none"
     }
 
-    render() {
+    startInterval = () => {
 
-        if (this.state.needBuild) {
-
-            this.setState({
-                ...this.state,
-                needBuild: false
-            })
+        if (!timeoutHandler) {
+            timeoutHandler = setTimeout(() => {
+                this.submitResults()
+            }, timeInterval)
         }
+    }
+
+    submitResults = () => {
+        if (intervalUpdate) {
+
+            console.log(this.state.helpCounter, time)
+        }
+        intervalUpdate = false
+
+        this.setState(({
+            ...this.state,
+            reRender: true
+        }))
+    }
+
+    resetTimer = () => {
+
+        if (timeoutHandler) {
+            clearTimeout(timeoutHandler)
+            timeoutHandler = null
+        }
+    }
+
+    render() {
         this.convertToSpan(this.splitedArr)
         this.createTableBody(this.body)
 
-
-        console.log(this.state)
         return (
             <div>
                 <div className="main-text" onMouseOut={this.hideHelp}>
-                    <input type="text" className="input-text" onKeyUp={this.assignTextToDiv} onChange={this.inputHandler} value={this.state.inputValue} />
+                    <input type="text" className="input-text" onKeyUp={() => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
                     <div className="translate-box" style={{ top: this.state.top, left: this.state.left }}><p id="answ"></p></div>
                     <table>
                         <tbody>
@@ -196,24 +223,21 @@ class TextTest extends Component {
                         </tbody>
                     </table>
                 </div>
-                {/* <div className="answer-text">
+                <div className="answer-text">
+                    <div className="rating">
+                        <p>{!intervalUpdate ? "Ilosć użytych podpowiedzi: " + this.state.helpCounter : ''}</p>
+                    </div>
 
-                </div> */}
+                    <div className="rate-box">
+                        <p>{!intervalUpdate ? "Wynik Czasowy: " + (time / 60).toFixed(2) : ''}</p>
+                        <p>{time / 60 <= 4.06 && !intervalUpdate ? "Pewność pisowni w języku angielskim jest bardzo dobra" : ''}</p>
+                        <p>{time / 60 > 4.06 && !intervalUpdate ? "Pewność pisowni w języku angielskim poniżej 50 słów na minute" : ''}</p>
+                    </div>
+                </div>
             </div>
         )
     }
 }
 
 export default TextTest
-
-
-// In the dark the old man could feel the morning coming and as he rowed he heard the trembling
-// sound as flying fish left the water and the hissing that their stiff set wings made as they soared away
-// in the darkness. He was very fond of flying fish as they were his principal friends on the ocean. He
-// was sorry for the birds, especially the small delicate dark terns that were always flying and looking
-// and almost never finding, and he thought, the birds have a harder life than we do except for the
-// robber birds and the heavy strong ones. Why did they make birds so delicate and fine as those sea
-// swallows when the ocean can be so cruel? She is kind and very beautiful. But she can be so cruel and
-// it comes so suddenly and such birds that fly, dipping and hunting, with their small sad voices are
-// made too delicately for the sea.
 

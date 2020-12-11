@@ -176,8 +176,7 @@ class SpeechMenu extends Component {
             this.tmpArr.push(this.fillState(response[0]))
 
         }).then(() => {
-
-            console.log("OK")
+            
         }).catch((error) => {
 
             console.error('Error:' + error)
