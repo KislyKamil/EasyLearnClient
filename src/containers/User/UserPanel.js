@@ -17,7 +17,8 @@ class UserPanel extends Component {
 
         results: {
             test: 0,
-            speech: 0
+            speech: 0,
+            text: 0
         }
     }
 
@@ -63,7 +64,7 @@ class UserPanel extends Component {
 
         }).then((data) => {
 
-            let tmp = { test: data.testAll, speech: data.speechAll }
+            let tmp = { test: data.testAll, speech: data.speechAll, text: data.textAll }
 
             this.setState({
                 ...this.state,

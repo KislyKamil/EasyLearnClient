@@ -16,7 +16,7 @@ const Stats = (props) => {
                     ['Forma', 'ilosc'],
                     ['Wymowa', props.stats.speech / 5],
                     ['Slownictwo', props.stats.test],
-                    ['Tekst', 0]
+                    ['Tekst', props.stats.text]
                 ]}
                 options={{
                     title: 'Statystyki z wykonywania testow',

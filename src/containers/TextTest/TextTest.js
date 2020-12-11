@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as ActionTypes from './../../store/actions'
 import { setCORS } from "google-translate-api-browser";
 // setting up cors-anywhere server address
 import './TextTest.css'
@@ -184,7 +186,20 @@ class TextTest extends Component {
     submitResults = () => {
         if (intervalUpdate) {
 
-            console.log(this.state.helpCounter, time)
+            fetch('http://localhost:8080/api/Text/Results', {
+
+                method: "POST",
+                headers: {
+                    'Authorization': "Bearer " + this.props.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+
+                    id: this.props.userId,
+                })
+            }).then((response) => {
+
+            })
         }
         intervalUpdate = false
 
@@ -239,5 +254,12 @@ class TextTest extends Component {
     }
 }
 
-export default TextTest
+const mapStateToProps = state => {
+    return {
+        userId: state.user.id,
+        token: state.user.token,
+    }
+}
+
+export default connect(mapStateToProps)(TextTest)
 
