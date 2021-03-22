@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as ActionTypes from './../../store/actions'
 import { setCORS } from "google-translate-api-browser";
-// setting up cors-anywhere server address
 import './TextTest.css'
 
 const translate = setCORS("http://cors-anywhere.herokuapp.com/");
@@ -12,6 +11,7 @@ let time = 0
 let timeInterval = 6000;
 let timeoutHandler = null
 let intervalUpdate = true
+let wordsPerMinHandler = null
 
 class TextTest extends Component {
 
@@ -34,7 +34,8 @@ class TextTest extends Component {
         left: '',
         helpCounter: 0,
         translation: '',
-        reRender: false
+        reRender: false,
+        isUnmount: false
     }
 
 
@@ -112,11 +113,13 @@ class TextTest extends Component {
 
     inputHandler = (event) => {
 
-        if (this.state.needBuild) {
-            setInterval(() => {
+        if (!wordsPerMinHandler) {
+            wordsPerMinHandler = setInterval(() => {
                 time += 0.1
             }, 100)
         }
+
+
 
         this.setState({
             ...this.state,
@@ -141,6 +144,23 @@ class TextTest extends Component {
     componentDidMount = () => {
         document.getElementsByClassName("sideMenu")[0].style.display = "none"
         document.getElementsByClassName("input-text")[0].focus()
+
+        console.log("MOUNT")
+        time = 0
+        timeInterval = 6000;
+        timeoutHandler = null
+        intervalUpdate = true
+        wordsPerMinHandler = null
+    }
+
+    componentWillUnmount() {
+        console.log("UN-MOUNT")
+        time = 0
+        timeInterval = 6000;
+        timeoutHandler = null
+        intervalUpdate = true
+        wordsPerMinHandler = null
+
     }
 
     translateSpanHandler = (event) => {
@@ -174,6 +194,7 @@ class TextTest extends Component {
         document.getElementsByClassName("translate-box")[0].style.display = "none"
     }
 
+
     startInterval = () => {
 
         if (!timeoutHandler) {
@@ -184,6 +205,7 @@ class TextTest extends Component {
     }
 
     submitResults = () => {
+        clearInterval(wordsPerMinHandler)
         if (intervalUpdate) {
 
             fetch('http://localhost:8080/api/Text/Results', {
@@ -197,7 +219,7 @@ class TextTest extends Component {
 
                     id: this.props.userId,
                 })
-            }).then((response) => {
+            }).then(() => {
 
             })
         }
@@ -218,6 +240,19 @@ class TextTest extends Component {
     }
 
     render() {
+        console.log(time)
+        this.result = (
+            <div className="answer-text">
+                <div className="rating">
+                    <p>{"Ilość użytych podpowiedzi: " + this.state.helpCounter}</p>
+                </div>
+                <div className="rate-box">
+                    <p>{"Wynik Czasowy: " + (time / 60).toFixed(2)}</p>
+                    <p>{time / 60 <= 4.06 ? "Pewność pisowni w języku angielskim jest bardzo dobra" : "Pewność pisowni w języku angielskim poniżej 50 słów na minute"}</p>
+                </div>
+            </div>
+        )
+
         this.convertToSpan(this.splitedArr)
         this.createTableBody(this.body)
 
@@ -238,17 +273,7 @@ class TextTest extends Component {
                         </tbody>
                     </table>
                 </div>
-                <div className="answer-text">
-                    <div className="rating">
-                        <p>{!intervalUpdate ? "Ilosć użytych podpowiedzi: " + this.state.helpCounter : ''}</p>
-                    </div>
-
-                    <div className="rate-box">
-                        <p>{!intervalUpdate ? "Wynik Czasowy: " + (time / 60).toFixed(2) : ''}</p>
-                        <p>{time / 60 <= 4.06 && !intervalUpdate ? "Pewność pisowni w języku angielskim jest bardzo dobra" : ''}</p>
-                        <p>{time / 60 > 4.06 && !intervalUpdate ? "Pewność pisowni w języku angielskim poniżej 50 słów na minute" : ''}</p>
-                    </div>
-                </div>
+                { !intervalUpdate ? this.result : ""}
             </div>
         )
     }

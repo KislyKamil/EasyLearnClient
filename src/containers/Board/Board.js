@@ -7,8 +7,8 @@ import { Redirect } from 'react-router-dom';
 import './Board.css'
 
 import cardImg from '../../components/UI/assets/images/test.jpg'
-import cardImg2 from '../../components/UI/assets/images/test1.png'
-import cardImg3 from '../../components/UI/assets/images/card2.jpg'
+import cardImg2 from '../../components/UI/assets/images/test1.jpg'
+import cardImg3 from '../../components/UI/assets/images/write.jpg'
 
 class Board extends Component {
 
@@ -66,7 +66,7 @@ class Board extends Component {
                 <div className='board'>
                     <Card clickHandler={() => this.redirectToTest("exam")}>
                         <img src={cardImg} alt="test" width="100%" height="" />
-                        <p>Rozwiazuj testy oparte na twojej akutalnej wiedzy, kazdy nastepny test bedzie generowany na podstawie twoich wczesniejszych odpowiedzi</p>
+                        <p>Rozwijązuj krótkie testy oparte na twojej akutalnej wiedzy, każdy nastepny test bedzie generowany na podstawie twoich poprzednich odpowiedzi</p>
                         <div className='overlay'>
                             <p>Kliknij aby rozpoczac</p>
                         </div>
@@ -80,7 +80,7 @@ class Board extends Component {
                     </Card>
                     <Card clickHandler={() => this.redirectToTest("textTest")}>
                         <img src={cardImg3} alt="test" width="100%" height="" />
-                        <p>Inteligente czytanie</p>
+                        <p>Praca z tekstem</p>
                         <div className='overlay'>
                             <p>Kliknij aby rozpoczac</p>
                         </div>

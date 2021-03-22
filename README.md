@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Graphic credits: <a href="http://www.freepik.com">Designed by Freepik</a>
+
 ## Available Scripts
 
 In the project directory, you can run:
