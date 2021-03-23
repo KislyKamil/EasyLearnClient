@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import UserSettings from './../../components/UserSettings/UserSettings'
 import Stats from './../../components/Stats/Stats'
 import * as ActionTypes from './../../store/actions'
+import database from '../../config'
 
 import './UserPanel.css'
 
@@ -108,10 +109,24 @@ class UserPanel extends Component {
     }
 
     currentView = () => {
+
         if (this.state.view === "stats") {
-            this.userPanelPart = (
-                <Stats stats={this.state.results} />
-            )
+            let charData = [['Testy', 'Wynik']];
+            let obj;
+            database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
+                obj = snapshot.val()
+            }).then(() => {
+                obj.interval.map((ele, id) => {
+                    charData.push([id, parseFloat(ele)])
+                })
+                console.log(charData)
+            }).then(() => {
+                this.userPanelPart = (
+                    <Stats stats={this.state.results} userId={this.props.userId} data={charData} />
+                )
+            });
+
+
         }
         if (this.state.view === "details") {
             this.userPanelPart = (

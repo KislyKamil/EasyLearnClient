@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import * as ActionTypes from './../../store/actions'
 import { setCORS } from "google-translate-api-browser";
 import './TextTest.css'
+import database from '../../config'
 
 const translate = setCORS("http://cors-anywhere.herokuapp.com/");
 
@@ -222,6 +223,9 @@ class TextTest extends Component {
             }).then(() => {
 
             })
+
+
+
         }
         intervalUpdate = false
 
@@ -229,6 +233,26 @@ class TextTest extends Component {
             ...this.state,
             reRender: true
         }))
+
+        let obj, updates = {};
+        
+        database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
+            obj = snapshot.val()
+        }).then(() => {
+
+            if (obj == null) {
+                database.ref('Stats/' + this.props.userId).set({
+                    interval: [(time / 60).toFixed(2)]
+                });
+
+                return;
+            }
+
+            obj.interval.push((time / 60).toFixed(2))
+            updates['/Stats/' + this.props.userId] = obj;
+
+            return database.ref().update(updates);
+        })
     }
 
     resetTimer = () => {
