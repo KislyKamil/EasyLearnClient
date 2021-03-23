@@ -49,7 +49,7 @@ const Stats = (props) => {
                     rootProps={{ 'data-testid': '1' }}
                 /> */}
 
-                {/* <Chart
+                <Chart
                     width={'100%'}
                     height={'300px'}
                     chartType="ScatterChart"
@@ -57,7 +57,7 @@ const Stats = (props) => {
                     data={props.data}
                     options={{
                         title: 'Age of sugar maples vs. trunk diameter, in inches',
-                        hAxis: { title: 'Diameter', format: 'percent' },
+                        hAxis: { title: 'Diameter', scaleType: 'linear' },
                         vAxis: { title: 'Age' },
                         legend: 'none',
                         trendlines: {
@@ -66,7 +66,7 @@ const Stats = (props) => {
                         },
                     }}
                     rootProps={{ 'data-testid': '1' }}
-                /> */}
+                />
             </div>
         </div>
     )
