@@ -23,8 +23,22 @@ class UserPanel extends Component {
         }
     }
 
+    charData = [['Testy', 'Wynik']];
     componentDidMount = () => {
         document.getElementsByClassName("sideMenu")[0].style.display = "none"
+
+
+        let obj;
+        database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
+            obj = snapshot.val()
+        }).then(() => {
+            obj.interval.map((ele, id) => {
+                this.charData.push([id, parseFloat(ele)])
+            })
+        }).then(() => {
+
+        });
+
 
         this.getInitStats()
     }
@@ -110,24 +124,14 @@ class UserPanel extends Component {
 
     currentView = () => {
 
+
         if (this.state.view === "stats") {
-            let charData = [['Testy', 'Wynik']];
-            let obj;
-            database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
-                obj = snapshot.val()
-            }).then(() => {
-                obj.interval.map((ele, id) => {
-                    charData.push([id, parseFloat(ele)])
-                })
-                console.log(charData)
-            }).then(() => {
-                this.userPanelPart = (
-                    <Stats stats={this.state.results} userId={this.props.userId} data={charData} />
-                )
-            });
-
-
+            this.userPanelPart = (
+                <Stats stats={this.state.results} userId={this.props.userId} data={this.charData} />
+            )
         }
+
+
         if (this.state.view === "details") {
             this.userPanelPart = (
                 <UserSettings
@@ -154,16 +158,16 @@ class UserPanel extends Component {
                     <div className="grid-container">
 
                         <div className="grid-child-posts">
-                            15lvl
-                            </div>
+
+                        </div>
 
                         <div className="grid-child-followers">
-                            22 points
-                            </div>
+
+                        </div>
 
                     </div>
                     <button className="draw-border" onClick={() => this.onClickHandler("stats")}>Statystyki</button>
-                    <button className="draw-border" onClick={() => this.onClickHandler("details")}>Szczególy</button>
+                    <button className="draw-border" onClick={() => this.onClickHandler("details")}>Szczegóły</button>
                 </div>
 
                 {this.userPanelPart}

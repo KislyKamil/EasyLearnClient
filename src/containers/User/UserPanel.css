@@ -118,6 +118,11 @@
 .details{
   background-color: #222831;
   color: white;
+  display: grid;
+}
+.details-us{
+  background-color: #222831;
+  color: white;
   display: block;
 }
 

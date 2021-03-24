@@ -5,7 +5,7 @@ import { Alert } from 'react-bootstrap'
 const UserSettings = (props) => {
 
     return (
-        <div className="details">
+        <div className="details-us">
 
             <div className="details-change">
                 <div className="detail-box">
@@ -33,6 +33,7 @@ const UserSettings = (props) => {
             </div>
             {props.password !== props.passwordAgain? <Alert variant="danger">Hasla nie sa jednakowe</Alert>: <div></div> }
         </div>
+        
 
     )
 }
