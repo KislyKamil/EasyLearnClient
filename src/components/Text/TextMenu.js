@@ -7,7 +7,6 @@ const TextMenu = () => {
     return (
         <div>
             <TextTestLink id={1} />
-            <TextTestLink id={2} />
         </div>
 
     )

@@ -64,10 +64,6 @@ class Login extends Component {
 
         }).then((data) => {
 
-            this.setState({
-                isLoading: false,
-                isModal: true
-            });
 
             if (data.msg === null) {
                 this.props.authUser();
@@ -76,7 +72,19 @@ class Login extends Component {
                 this.props.storeUser(data);
                 this.props.localStore();
 
+                this.setState({
+                    isLoading: false,
+                    isModal: true
+                });
+                return;
             }
+
+
+            this.setState({
+                isLoading: false,
+            });
+            alert("Niepoprawne dane logowania")
+
         })
     }
 
