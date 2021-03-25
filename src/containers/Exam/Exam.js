@@ -6,6 +6,7 @@ import 'firebase/database'
 import 'firebase/analytics'
 import * as ActionTypes from './../../store/actions'
 import { Redirect } from 'react-router-dom';
+import ButtonBar from '../../components/ButtonBar/ButtonBar'
 
 import database from './../../config'
 import './Exam.css'
@@ -366,6 +367,13 @@ class Exam extends Component {
         }
     }
 
+    goToPage = (event) => {
+        this.setState({
+            ...this.state,
+            pageID: event.target.id
+        })
+    }
+
     render() {
 
 
@@ -406,9 +414,16 @@ class Exam extends Component {
         } else {
 
             test = (
-                < div className="Test-box" >
-                    { activeQuestion}
-                </div >
+                <div>
+                    < div className="Test-box" >
+                        {activeQuestion}
+
+                    </div >
+    
+                    <ButtonBar handler={this.goToPage} page={this.state.pageID}/>
+                </div>
+
+
             )
         }
 

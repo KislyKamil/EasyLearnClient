@@ -1,0 +1,35 @@
+.ButtonBar{
+    width: 10%;
+    position: absolute;
+    left: 80%;
+    top: 30%;
+}
+
+ul{
+    list-style-type: disc;
+    font-size: 25px;
+    cursor: pointer;
+}
+li {
+    float: left;
+    list-style: none;
+    text-align: center;
+    background-color: #394867;
+    margin-bottom: 10px;
+    width: 150px;
+    line-height: 40px;
+    text-decoration: none
+    
+  }
+
+ li span {
+    text-decoration: none;
+    color: #FFFFFF;
+    display: block;
+  }
+  
+  li:hover {
+    text-decoration: none;
+    color: #000000;
+    background-color: #202329;
+  }
