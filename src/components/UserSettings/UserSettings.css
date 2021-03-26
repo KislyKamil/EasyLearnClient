@@ -47,7 +47,7 @@
   .update a.transparent > p span.base {
     border: 1px solid #ece8e1;
   }
-  .update a:after, div a:before {
+  .update a:after, .update a:before {
     content: "";
     width: 1px;
     position: absolute;
