@@ -9,13 +9,44 @@ import './Board.css'
 import cardImg from '../../components/UI/assets/images/test.jpg'
 import cardImg2 from '../../components/UI/assets/images/test1.jpg'
 import cardImg3 from '../../components/UI/assets/images/write.jpg'
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Board extends Component {
+    img1;
+    img2;
+    img3;
+
 
     state = {
         shouldRedirectToSpeech: false,
-        shouldRedirectToText: false
+        shouldRedirectToText: false,
+        isLoading: true
     }
+
+    body = (<div className='board'>
+        <Card clickHandler={() => this.redirectToTest("exam")}>
+            <img src={cardImg} alt="test" width="100%" height="" />
+            <p>Rozwijązuj krótkie testy oparte na twojej akutalnej wiedzy, każdy nastepny test bedzie generowany na podstawie twoich poprzednich odpowiedzi</p>
+            <div className='overlay'>
+                <p>Kliknij aby rozpoczac</p>
+            </div>
+        </Card>
+        <Card clickHandler={() => this.redirectToTest("speechTest")}>
+            <img src={cardImg2} alt="test" width="100%" height="" />
+            <p>Nauka wymowy</p>
+            <div className='overlay'>
+                <p>Kliknij aby rozpoczac</p>
+            </div>
+        </Card>
+        <Card clickHandler={() => this.redirectToTest("textTest")}>
+            <img src={cardImg3} alt="test" width="100%" height="" />
+            <p>Praca z tekstem</p>
+            <div className='overlay'>
+                <p>Kliknij aby rozpoczac</p>
+            </div>
+        </Card>
+    </div>
+    )
 
     redirectToTest = (param) => {
 
@@ -36,6 +67,17 @@ class Board extends Component {
 
         }
     }
+
+    componentDidMount = () => {
+
+        setTimeout(() => {
+            this.setState({
+                ...this.state,
+                isLoading: false
+            })
+        }, 1000)
+    }
+
 
 
     render() {
@@ -61,31 +103,10 @@ class Board extends Component {
 
         } else {
 
+
             return (
 
-                <div className='board'>
-                    <Card clickHandler={() => this.redirectToTest("exam")}>
-                        <img src={cardImg} alt="test" width="100%" height="" />
-                        <p>Rozwijązuj krótkie testy oparte na twojej akutalnej wiedzy, każdy nastepny test bedzie generowany na podstawie twoich poprzednich odpowiedzi</p>
-                        <div className='overlay'>
-                            <p>Kliknij aby rozpoczac</p>
-                        </div>
-                    </Card>
-                    <Card clickHandler={() => this.redirectToTest("speechTest")}>
-                        <img src={cardImg2} alt="test" width="100%" height="" />
-                        <p>Nauka wymowy</p>
-                        <div className='overlay'>
-                            <p>Kliknij aby rozpoczac</p>
-                        </div>
-                    </Card>
-                    <Card clickHandler={() => this.redirectToTest("textTest")}>
-                        <img src={cardImg3} alt="test" width="100%" height="" />
-                        <p>Praca z tekstem</p>
-                        <div className='overlay'>
-                            <p>Kliknij aby rozpoczac</p>
-                        </div>
-                    </Card>
-                </div>
+                this.state.isLoading ? <Spinner /> : this.body
 
             )
         }

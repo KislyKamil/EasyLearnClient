@@ -179,7 +179,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         authUser: () => dispatch({ type: ActionTypes.AUTH }),
-        storeUser: (data) => dispatch({ type: ActionTypes.STORE_USER, id: data.id, username: data.username, token: data.token, testCount: data.testAmount }),
+        storeUser: (data) => dispatch({ type: ActionTypes.STORE_USER, id: data.id, username: data.username, token: data.token, testCount: data.testAmount, email: data.email }),
         localStore: () => dispatch({ type: ActionTypes.SAVE_STORAGE }),
         examOff: () => dispatch({ type: ActionTypes.EXAM_OFF })
     }

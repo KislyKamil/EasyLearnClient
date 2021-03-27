@@ -16,6 +16,7 @@ const initialState = {
         username: '',
         token: '',
         testCount: 1,
+        email: ''
     }
 }
 
@@ -55,7 +56,8 @@ const reducer = (state = initialState, action) => {
                 id: action.id,
                 username: action.username,
                 token: action.token,
-                testCount: action.testCount
+                testCount: action.testCount,
+                email: action.email
             }
             return {
                 ...state,

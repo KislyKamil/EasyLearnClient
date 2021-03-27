@@ -23,7 +23,7 @@ class UserPanel extends Component {
         }
     }
 
-    charData = [['Testy', 'Wynik']];
+    charData = [['Testy', 'Wynik'], [0, 0]];
     componentDidMount = () => {
         document.getElementsByClassName("sideMenu")[0].style.display = "none"
 
@@ -32,9 +32,14 @@ class UserPanel extends Component {
         database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
             obj = snapshot.val()
         }).then(() => {
-            obj.interval.map((ele, id) => {
-                this.charData.push([id, parseFloat(ele)])
-            })
+
+            if (obj != null) {
+                this.charData =[['Testy', 'Wynik']]
+                obj.interval.map((ele, id) => {
+                    this.charData.push([id, parseFloat(ele)])
+                })
+            }
+
         }).then(() => {
 
         });
@@ -158,7 +163,7 @@ class UserPanel extends Component {
                     <div className="grid-container">
 
                         <div className="grid-child-posts">
-
+                            {this.props.email}
                         </div>
 
                         <div className="grid-child-followers">
@@ -180,6 +185,7 @@ class UserPanel extends Component {
 const mapStateToProps = state => {
     return {
         username: state.user.username,
+        email: state.user.email,
         userId: state.user.id,
         token: state.user.token,
         testAmount: state.user.testCount

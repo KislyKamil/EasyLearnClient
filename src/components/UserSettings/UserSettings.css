@@ -29,7 +29,7 @@
   }
   .update a.white > p {
     background: #ece8e1;
-    color: #0f1923;
+    color: #222831;
   }
   .update a.white > p span.base {
     border: 1px solid transparent;
@@ -41,7 +41,7 @@
     box-shadow: 0 0 0 1px #ece8e1;
   }
   .update a.transparent > p {
-    background: #0f1923;
+    background: #222831;
     color: #ece8e1;
   }
   .update a.transparent > p span.base {
@@ -52,7 +52,7 @@
     width: 1px;
     position: absolute;
     height: 8px;
-    background: #0f1923;
+    background: #222831;
     left: 0;
     top: 50%;
     transform: translateY(-50%);

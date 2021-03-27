@@ -75,6 +75,7 @@ const SideMenu = (props) => {
 
         examList = [];
         pushExams("test test-close")
+        console.log(examList)
 
     }
 
