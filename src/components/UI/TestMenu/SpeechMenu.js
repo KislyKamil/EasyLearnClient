@@ -42,33 +42,6 @@ class SpeechMenu extends Component {
                 },
                 definition: '',
                 example: ''
-            },
-            {
-                word: '',
-                phonetics: {
-                    text: '',
-                    audio: ''
-                },
-                definition: '',
-                example: ''
-            },
-            {
-                word: '',
-                phonetics: {
-                    text: '',
-                    audio: ''
-                },
-                definition: '',
-                example: ''
-            },
-            {
-                word: '',
-                phonetics: {
-                    text: '',
-                    audio: ''
-                },
-                definition: '',
-                example: ''
             }
         ],
         currentPage: 0,
@@ -80,7 +53,7 @@ class SpeechMenu extends Component {
 
     componentDidMount = () => {
 
-        this.words = randomWords(6)
+        this.words = randomWords(3)
 
         this.words.forEach(element => {
             this.fetchWords(element)
@@ -176,7 +149,7 @@ class SpeechMenu extends Component {
             this.tmpArr.push(this.fillState(response[0]))
 
         }).then(() => {
-            
+
         }).catch((error) => {
 
             console.error('Error:' + error)
@@ -188,7 +161,7 @@ class SpeechMenu extends Component {
 
         for (let i = 0; i < questions.length; i++) {
 
-            if (i === 5) {
+            if (i === 2) {
 
                 testBody.push(
                     <p className="send" onClick={this.submitResults}>Zakończ</p>

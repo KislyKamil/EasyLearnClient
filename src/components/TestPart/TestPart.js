@@ -21,6 +21,7 @@ const TestPart = (props) => {
 
     let part = (
         <div>
+            <button class="reset-btn" onClick={props.nextQuestion}></button>
             <div className="word-box">Słowo:
             <p className="wd">{props.word.toLowerCase()}</p>
             </div>

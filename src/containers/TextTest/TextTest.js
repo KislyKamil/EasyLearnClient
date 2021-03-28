@@ -9,7 +9,7 @@ const translate = setCORS("http://cors-anywhere.herokuapp.com/");
 
 
 let time = 0
-let timeInterval = 6000;
+let timeInterval = 4500;
 let timeoutHandler = null
 let intervalUpdate = true
 let wordsPerMinHandler = null
@@ -166,7 +166,7 @@ class TextTest extends Component {
 
         console.log("MOUNT")
         time = 0
-        timeInterval = 6000;
+        timeInterval = 4500;
         timeoutHandler = null
         intervalUpdate = true
         wordsPerMinHandler = null
@@ -175,7 +175,7 @@ class TextTest extends Component {
     componentWillUnmount() {
         console.log("UN-MOUNT")
         time = 0
-        timeInterval = 6000;
+        timeInterval = 4500;
         timeoutHandler = null
         intervalUpdate = true
         wordsPerMinHandler = null
@@ -321,7 +321,7 @@ class TextTest extends Component {
                     <p>{"Ilość użytych podpowiedzi: " + this.state.helpCounter}</p>
                 </div>
                 <div className="rate-box">
-                    <p>{"Wynik Czasowy: " + this.state.resultTime}</p>
+                    <p>{"Wynik: " + this.state.resultTime}</p>
                     <p>{this.state.resultTime >= 40 ? "Pewność pisowni w języku angielskim jest bardzo dobra" : "Pisownia poniżej 40 słów na minutę"}</p>
                 </div>
             </div>
