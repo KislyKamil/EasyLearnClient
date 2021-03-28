@@ -36,11 +36,14 @@ class TextTest extends Component {
         helpCounter: 0,
         translation: '',
         reRender: false,
-        isUnmount: false
+        isUnmount: false,
+        resultTime: 0
     }
 
 
-    textSample1 = "James himself suffered a brush with melancholy, but he made a full recovery and began to think positively, or at least equivocally, about being alive, answering yes to the question “Is Life Worth Living?” However, by force of his honesty of intellect he knew this opinion needed to be defended as much as any other opinion. No logic can support it. Indeed, logic defeats all feeling that life is worth living, which, James says, only a self-willed belief in a higher order of existence can instill. Then every suffering will seem worthwhile in the way that the vivisection of a living dog, to use James’s example, would seem worthwhile to the animal if only it could comprehend the goodly ends its pain serves for the higher order of human existence. In his lecture “Is Life Worth Living,” James opined that human beings, unlike dogs, can in fact imagine a higher order of existence than theirs, one that may legitimate the worst adversities of mortal life. ";
+
+    // textSample1 = "James himself suffered a brush with melancholy, but he made a full recovery and began to think positively, or at least equivocally, being alive, answering yes to the question “Is Life Worth Living?” However, by force of his honesty of intellect he knew this opinion needed to be defended as much as any other opinion. No logic can support it. Indeed, logic defeats all feeling";
+    textSample1 = "James himself suffered a brush with melancholy, but he made a full recovery and began to think positively, or at least equivocally, about being alive, answering yes to the question “Is Life Worth Living?” However, by force of his honesty of intellect he knew this opinion needed to be defended as much as any other opinion. No logic can support it. Indeed, logic defeats all feeling that life is worth living, which, James says, only a self-willed belief in a higher order of existence can instill. Then every suffering will seem worthwhile in the way that the vivisection of a living dog, to use James’s example, would seem worthwhile to the animal if only it could comprehend the goodly ends its pain serves for the higher order of human existence. In his lecture “Is Life Worth Living,” James opined that human beings, unlike dogs, can in fact imagine a higher order of existence.";
 
     convertStringToArr = (text) => {
         return text.split(' ')
@@ -55,6 +58,9 @@ class TextTest extends Component {
     contentBody = []
     divBody = [8]
 
+
+    textArr = []
+    tmpText = Array(7).fill('')
     convertToSpan = (arr) => {
         let tmp = []
         let pointer = 0
@@ -68,7 +74,7 @@ class TextTest extends Component {
                 pointer++
             }
             tmp.push(
-                <span key={index} onClick={this.translateSpanHandler} onMouseOver={this.clearHelp}>{element}{" "}</span>
+                <span key={index} onClick={this.translateSpanHandler} onMouseOver={this.clearHelp} id={element + index}>{element}{" "}</span>
             )
 
             if (index === arr.length - 1) {
@@ -88,7 +94,7 @@ class TextTest extends Component {
         this.tableBody = []
         source.forEach((element, id) => {
             this.tableBody.push(
-                <tr key={id}>
+                <tr className="text-span" key={id}>
                     <td>{element}</td>
                 </tr>
             )
@@ -102,15 +108,20 @@ class TextTest extends Component {
     }
 
     setFocus = (event) => {
-        document.getElementsByClassName("input-text")[0].focus()
+        document.getElementById('input' + event.target.id).focus()
 
         this.setState({
             ...this.state,
+            inputValue: '',
             divId: event.target.id
+
         })
     }
 
     inputHandler = (event) => {
+
+        // let inputID = parseInt(event.target.id.slice(event.target.id.length - 1, event.target.id.length)) + 1;
+
 
         if (!wordsPerMinHandler) {
             wordsPerMinHandler = setInterval(() => {
@@ -118,31 +129,40 @@ class TextTest extends Component {
             }, 100)
         }
 
-
-
         this.setState({
             ...this.state,
             needBuild: false,
             inputValue: event.target.value
         })
+
+
     }
 
     assignTextToDiv = () => {
 
         let tmp = [...this.state.divText]
-        tmp[this.state.divId] += this.state.inputValue
+        tmp[this.state.divId] = this.state.inputValue
 
 
         this.setState({
             ...this.state,
             divText: tmp,
-            inputValue: ''
+
+        })
+    }
+
+    compareResult(arr) {
+        arr.map((ele, id) => {
+
+            if (this.textArr[id] != ele) {
+                document.getElementById(ele + id).style.backgroundColor = "red"
+            }
         })
     }
 
     componentDidMount = () => {
         document.getElementsByClassName("sideMenu")[0].style.display = "none"
-        document.getElementsByClassName("input-text")[0].focus()
+        document.getElementById('input0').focus()
 
         console.log("MOUNT")
         time = 0
@@ -193,7 +213,6 @@ class TextTest extends Component {
         document.getElementsByClassName("translate-box")[0].style.display = "none"
     }
 
-
     startInterval = () => {
 
         if (!timeoutHandler) {
@@ -201,10 +220,28 @@ class TextTest extends Component {
                 this.submitResults()
             }, timeInterval)
         }
+
+    }
+
+    changeLine = (event) => {
+        let inputID = parseInt(event.target.id.slice(event.target.id.length - 1, event.target.id.length)) + 1;
+        if (event.keyCode === 13) {
+
+            event.preventDefault();
+            document.getElementById('input' + inputID).focus()
+
+            this.setState({
+                ...this.state,
+                inputValue: '',
+                divId: inputID
+
+            })
+        }
     }
 
     submitResults = () => {
         clearInterval(wordsPerMinHandler)
+        let filtered;
         if (intervalUpdate) {
 
             fetch('http://localhost:8080/api/Text/Results', {
@@ -223,34 +260,50 @@ class TextTest extends Component {
             })
 
 
+            this.tmpText.map((element, id) => {
+
+                this.textArr.push(...document.getElementById(id).innerText.split(" "))
+            })
+
+            filtered = this.textArr.filter((ele) => {
+                return ele !== "";
+            })
+            // console.log(filtered.length / (time / 60))
+            // console.log((time / 60))
+            this.compareResult(this.splitedArr);
 
         }
         intervalUpdate = false
 
-        this.setState(({
-            ...this.state,
-            reRender: true
-        }))
+        if (filtered != null) {
+            this.setState(({
+                ...this.state,
+                resultTime: parseInt(filtered.length / (time / 60)),
+                reRender: true
+            }))
 
-        let obj, updates = {};
-        
-        database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
-            obj = snapshot.val()
-        }).then(() => {
 
-            if (obj == null) {
-                database.ref('Stats/' + this.props.userId).set({
-                    interval: [(time / 60).toFixed(2)]
-                });
 
-                return;
-            }
+            let obj, updates = {};
 
-            obj.interval.push((time / 60).toFixed(2))
-            updates['/Stats/' + this.props.userId] = obj;
+            database.ref('/Stats/' + this.props.userId).once('value').then((snapshot) => {
+                obj = snapshot.val()
+            }).then(() => {
 
-            return database.ref().update(updates);
-        })
+                if (obj == null) {
+                    database.ref('Stats/' + this.props.userId).set({
+                        interval: [this.state.resultTime]
+                    });
+
+                    return;
+                }
+
+                obj.interval.push(this.state.resultTime)
+                updates['/Stats/' + this.props.userId] = obj;
+
+                return database.ref().update(updates);
+            })
+        }
     }
 
     resetTimer = () => {
@@ -262,18 +315,18 @@ class TextTest extends Component {
     }
 
     render() {
-        console.log(time)
         this.result = (
             <div className="answer-text">
                 <div className="rating">
                     <p>{"Ilość użytych podpowiedzi: " + this.state.helpCounter}</p>
                 </div>
                 <div className="rate-box">
-                    <p>{"Wynik Czasowy: " + (time / 60).toFixed(2)}</p>
-                    <p>{time / 60 <= 4.06 ? "Pewność pisowni w języku angielskim jest bardzo dobra" : "Pewność pisowni w języku angielskim poniżej 50 słów na minute"}</p>
+                    <p>{"Wynik Czasowy: " + this.state.resultTime}</p>
+                    <p>{this.state.resultTime >= 40 ? "Pewność pisowni w języku angielskim jest bardzo dobra" : "Pisownia poniżej 40 słów na minutę"}</p>
                 </div>
             </div>
         )
+
 
         this.convertToSpan(this.splitedArr)
         this.createTableBody(this.body)
@@ -281,9 +334,72 @@ class TextTest extends Component {
         return (
             <div>
                 <div className="main-text" onMouseOut={this.hideHelp}>
-                    <input type="text" className="input-text" onKeyUp={() => {
+                    <input type="text" id="input0" className="input-text" onKeyUp={(event) => {
                         this.assignTextToDiv()
                         this.startInterval()
+                        this.changeLine(event)
+
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+                    <input type="text" id="input1" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
+
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+                    <input type="text" id="input2" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+
+                    <input type="text" id="input3" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+                    <input type="text" id="input4" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+
+                    <input type="text" id="input5" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+
+                    <input type="text" id="input6" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
+                    }}
+                        onKeyDown={this.resetTimer}
+                        onChange={this.inputHandler}
+                        value={this.state.inputValue} />
+
+                    <input type="text" id="input7" className="input-text" onKeyUp={(event) => {
+                        this.assignTextToDiv()
+                        this.startInterval()
+                        this.changeLine(event)
                     }}
                         onKeyDown={this.resetTimer}
                         onChange={this.inputHandler}

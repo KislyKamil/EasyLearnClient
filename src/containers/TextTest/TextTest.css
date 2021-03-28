@@ -1,10 +1,14 @@
 .main-text{
-    width: 70%;
+    width: 100%;
     position: relative;
     margin-top: 25px;
     font-size: 21px;
     font-weight: 500;
-    left: 16%;
+    left: 10%;
+}
+
+.text-span{
+    width: 110%;
 }
 
 .writing-box{
@@ -15,8 +19,8 @@
 }
 
 .input-text{
-    width: 1px;
-    height: 1px;
+    width: 0.5px;
+    height: 0.5px;
     background-color: ghostwhite;
     /* background-color: grey; */
     border-style: none;
@@ -29,16 +33,16 @@
 
 .translate-box{
     position: absolute;
-    width: 11%;
-    height: 10%;
+    width: 13%;
+    height: 20%;
     opacity: 0.9;
-    background-color: rgb(141, 134, 141);
+    background-color: rgb(51, 68, 105);
     border-radius: 9%;
     display: none
 }
 
 .translate-box p {
-    color: black;
+    color: white;
     text-align: center;
     top: 15%;
 }

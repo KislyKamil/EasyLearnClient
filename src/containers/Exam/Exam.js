@@ -368,15 +368,16 @@ class Exam extends Component {
     }
 
     goToPage = (event) => {
+        const page = parseInt(event.target.id)
         this.setState({
             ...this.state,
-            pageID: event.target.id
+            pageID: page
         })
     }
 
     render() {
 
-
+        console.log(this.state.pageID)
         if (this.state.isSubmitted) {
             return (<Redirect to="/Board" />)
         }
@@ -419,8 +420,8 @@ class Exam extends Component {
                         {activeQuestion}
 
                     </div >
-    
-                    <ButtonBar handler={this.goToPage} page={this.state.pageID}/>
+
+                    <ButtonBar handler={this.goToPage} page={this.state.pageID} />
                 </div>
 
 

@@ -9,6 +9,7 @@ import UserPanel from './containers/User/UserPanel'
 import SpeechTest from './containers/SpeechTest/SpeechTest'
 import TextTest from './containers/TextTest/TextTest'
 import TextMenu from '././components/Text/TextMenu'
+import Home from './components/Home'
 
 import { connect } from 'react-redux'
 import * as ActionTypes from './store/actions'
@@ -26,7 +27,7 @@ class App extends Component {
 
     let routes = (
       <Switch>
-        {/* <Route path="/" component={Home} /> */}
+        <Route path="/" exact component={Home} />
         <Route path="/Login" component={Login} />
         <Route path="/Signup" exact component={Register} />
         <Route path='/Board' exact component={Board} />

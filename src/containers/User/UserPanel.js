@@ -34,7 +34,7 @@ class UserPanel extends Component {
         }).then(() => {
 
             if (obj != null) {
-                this.charData =[['Testy', 'Wynik']]
+                this.charData = [['Testy', 'Wynik']]
                 obj.interval.map((ele, id) => {
                     this.charData.push([id, parseFloat(ele)])
                 })
@@ -115,7 +115,7 @@ class UserPanel extends Component {
         }).then((data) => {
 
             console.log(data)
-            this.props.storeUser({ username: data.username, token: data.token, userId: this.props.userId, testAmount: this.props.testAmount })
+            this.props.storeUser({ username: data.username, token: data.token, userId: this.props.userId, testAmount: this.props.testAmount, email: data.email })
         })
     }
 
@@ -163,12 +163,12 @@ class UserPanel extends Component {
                     <div className="grid-container">
 
                         <div className="grid-child-posts">
-                            {this.props.email}
+                            <p>email:  {this.props.email}</p>
                         </div>
 
-                        <div className="grid-child-followers">
-
-                        </div>
+                        {/* <div className="grid-child-followers">
+                          
+                        </div> */}
 
                     </div>
                     <button className="draw-border" onClick={() => this.onClickHandler("stats")}>Statystyki</button>
@@ -194,7 +194,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        storeUser: (data) => dispatch({ type: ActionTypes.STORE_USER, id: data.userId, username: data.username, token: data.token, testCount: data.testAmount }),
+        storeUser: (data) => dispatch({ type: ActionTypes.STORE_USER, id: data.userId, username: data.username, token: data.token, testCount: data.testAmount, email: data.email }),
     }
 }
 

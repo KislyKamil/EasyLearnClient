@@ -33,7 +33,8 @@ const loadStateFromStorage = () => {
             id: storage.getItem("userID"),
             username: storage.getItem("userName"),
             token: storage.getItem("token"),
-            testCount: storage.getItem("testCount")
+            testCount: storage.getItem("testCount"),
+            email: storage.getItem("email")
         }
     }
 
@@ -97,6 +98,7 @@ const reducer = (state = initialState, action) => {
             storage.setItem("userName", state.user.username)
             storage.setItem("token", state.user.token)
             storage.setItem("testCount", state.user.testCount.toString())
+            storage.setItem("email", state.user.email.toString())
             storage.setItem("isAuth", state.isAuthenticated.toString())
             break
 
